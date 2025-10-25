@@ -12,7 +12,6 @@ export default function ContactForm() {
     e.preventDefault();
     setLoading(true);
     try {
-      // Stub: replace with API route or 3rd-party form service
       await new Promise((r) => setTimeout(r, 600));
       console.log("Stakeholder inquiry", form);
       setSubmitted(true);
