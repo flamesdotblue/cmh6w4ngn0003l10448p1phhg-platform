@@ -1,22 +1,26 @@
 import React, { useState } from "react";
-import { Menu, X } from "lucide-react";
-import Logo from "./Logo";
+import { Shield, Menu, X } from "lucide-react";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+
   const navItems = [
     { href: "#overview", label: "Overview" },
     { href: "#architecture", label: "Architecture" },
     { href: "#modules", label: "Modules" },
-    { href: "#governance", label: "Gov/Private" },
     { href: "#contact", label: "Contact" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60 bg-neutral-950/80 border-b border-neutral-800 print:hidden">
+    <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60 bg-neutral-950/80 border-b border-neutral-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-3">
-          <Logo className="w-8 h-8" />
+        <a href="#" className="flex items-center gap-2">
+          <div className="relative">
+            <div className="absolute inset-0 blur-sm bg-gradient-to-br from-yellow-200 via-amber-400 to-yellow-600 rounded-md opacity-70" />
+            <div className="relative bg-neutral-900/80 border border-yellow-500/40 text-yellow-300 rounded-md p-1.5">
+              <Shield className="w-5 h-5" />
+            </div>
+          </div>
           <span className="text-lg font-semibold tracking-tight">
             <span className="bg-gradient-to-br from-yellow-200 via-amber-300 to-yellow-500 bg-clip-text text-transparent">luxury</span>
             <span className="text-neutral-200">HMS</span>
@@ -26,7 +30,11 @@ export default function Header() {
 
         <nav className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
-            <a key={item.href} href={item.href} className="text-sm text-neutral-300 hover:text-yellow-300 transition-colors">
+            <a
+              key={item.href}
+              href={item.href}
+              className="text-sm text-neutral-300 hover:text-yellow-300 transition-colors"
+            >
               {item.label}
             </a>
           ))}

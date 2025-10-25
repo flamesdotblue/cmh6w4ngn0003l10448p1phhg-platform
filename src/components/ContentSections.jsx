@@ -1,5 +1,5 @@
 import React from "react";
-import { HeartPulse, Stethoscope, Pill, FlaskConical, BedDouble, Building2, Users, Shield } from "lucide-react";
+import { HeartPulse, Stethoscope, Pill, FlaskConical, BedDouble, Building2, Shield } from "lucide-react";
 
 export default function ContentSections() {
   return (
@@ -37,7 +37,7 @@ export default function ContentSections() {
           <Diagram />
           <div className="mt-6 grid md:grid-cols-3 gap-6">
             <InfoCard title="Security" items={["AES-256 at rest","RBAC & audit logs","JWT per request","Tenant isolation"]} />
-            <InfoCard title="Performance" items={["\u003c2s page loads","Optimized PDFs","Pagination & lazy-load","Realtime updates"]} />
+            <InfoCard title="Performance" items={["<2s page loads","Optimized PDFs","Pagination & lazy-load","Realtime updates"]} />
             <InfoCard title="Operations" items={["CI/CD on Vercel","Supabase logs","Daily DB snapshots","Multi-region ready"]} />
           </div>
         </div>
@@ -47,7 +47,9 @@ export default function ContentSections() {
           <InfoCard title="Shift Management" items={["Create Morning/Afternoon/Night","Attendance (manual/QR)","Auto logout & handover notes"]} />
         </div>
 
-        <div className="mt-10 text-xs text-neutral-500">KPIs: <span className="text-neutral-300">Load \u003c2s • Notes upload \u003c3s • Onboarding \u003c2 days • Uptime 99.9% • 100+ hospitals • 1s record latency</span></div>
+        <div id="kpis" className="mt-10 text-xs text-neutral-500">
+          KPIs: <span className="text-neutral-300">Load &lt;2s • Notes upload &lt;3s • Onboarding &lt;2 days • Uptime 99.9% • 100+ hospitals • 1s record latency</span>
+        </div>
       </div>
     </section>
   );
