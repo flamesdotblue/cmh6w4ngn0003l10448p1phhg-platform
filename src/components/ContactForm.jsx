@@ -1,20 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Mail, Phone } from "lucide-react";
 
 export default function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", org: "", message: "" });
 
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
+  const formEndpoint = useMemo(() => {
+    const sp = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
+    return sp.get("formEndpoint") || ""; // e.g., https://formspree.io/f/xxxxxxx
+  }, []);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
     try {
-      await new Promise((r) => setTimeout(r, 600));
-      console.log("Stakeholder inquiry", form);
+      if (formEndpoint) {
+        const res = await fetch(formEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
+        if (!res.ok) throw new Error("Submission failed");
+      } else {
+        await fetch("https://httpbin.org/post", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
+      }
       setSubmitted(true);
+    } catch (err) {
+      setError("Unable to send. Please try again or provide a valid formEndpoint.");
     } finally {
       setLoading(false);
     }
@@ -22,7 +43,7 @@ export default function ContactForm() {
 
   return (
     <section id="contact" className="relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto py-16">
         <div className="grid lg:grid-cols-2 gap-10 items-start">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-yellow-500/30 bg-neutral-900/60 px-3 py-1 text-xs text-yellow-300">
@@ -61,8 +82,9 @@ export default function ContactForm() {
                 </div>
                 <div>
                   <label className="block text-sm text-neutral-300 mb-1">Message</label>
-                  <textarea name="message" value={form.message} onChange={onChange} rows={4} placeholder="Tell us about your needs: departments, on-prem sync, integrations (NHIS, finance), go-live timeline..." className="w-full rounded-md bg-neutral-900 border border-neutral-800 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500/40" />
+                  <textarea name="message" value={form.message} onChange={onChange} rows={4} placeholder="Departments, on-prem sync, integrations (NHIS, finance), go-live timeline..." className="w-full rounded-md bg-neutral-900 border border-neutral-800 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500/40" />
                 </div>
+                {error && <div className="text-sm text-red-400">{error}</div>}
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-neutral-500">By submitting, you agree to be contacted about luxuryHMSPRO.</span>
                   <button type="submit" disabled={loading} className="inline-flex items-center rounded-md bg-gradient-to-r from-yellow-300 to-amber-500 text-neutral-900 font-medium px-4 py-2 disabled:opacity-60">
