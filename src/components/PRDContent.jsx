@@ -58,7 +58,7 @@ export default function PRDContent() {
         </div>
 
         <div id="kpis" className="mt-10 text-xs text-neutral-500">
-          KPIs: <span className="text-neutral-300">Load <2s • Notes upload <3s • Onboarding <2 days • Uptime 99.9% • 100+ hospitals • 1s record latency</span>
+          KPIs: <span className="text-neutral-300">Load &lt;2s • Notes upload &lt;3s • Onboarding &lt;2 days • Uptime 99.9% • 100+ hospitals • 1s record latency</span>
         </div>
       </div>
     </section>
